@@ -42,6 +42,7 @@ export class WelcomeToRoom {
 
   public startGame(seed?: string) {
     const gameInfo = generateNewGame(seed);
+    console.log(gameInfo);
     this.pristineDeck = gameInfo.deck;
     this.plans = gameInfo.plans;
     this.flipDeal();
@@ -62,6 +63,10 @@ export class WelcomeToRoom {
 
     for(const player of this.players) {
       player.doneTurn = false;
+      player.send({
+        method: 'doneTurnUpdate',
+        doneTurn: false
+      });
     }
 
     this.update();

@@ -130,7 +130,11 @@ export function generateNewGame(seed?: string) {
   }
   const chosenPlans: WelcomeToCityPlan[] = [];
   for(const planDeck of Object.values(plans)) {
-    chosenPlans.push(planDeck[generator.int32() % planDeck.length]);
+    const index = Math.abs(generator.int32()) % planDeck.length;
+    console.log(index);
+    console.log(planDeck[index]);
+    console.log('---');
+    chosenPlans.push(planDeck[index]);
   }
 
   return {

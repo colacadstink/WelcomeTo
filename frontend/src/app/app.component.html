@@ -1,0 +1,51 @@
+<div *ngIf="!client.id" class="createOrJoin">
+    <label>
+        Room ID
+        <input [(ngModel)]="roomID">
+    </label>
+    <button (click)="client.createRoom(roomID)">
+        Create new room
+    </button>
+    <button (click)="client.joinRoom(roomID)">
+        Join existing room
+    </button>
+</div>
+<div *ngIf="client.id" class="game">
+    Development plans:
+    <div class="plans">
+        <div *ngFor="let plan of client.plans" class="plan">
+            n.{{plan.planNumber}}<br>
+            Estates required: {{plan.estates.join(', ')}}<br>
+            Point values: {{plan.points[0]}} if first, {{plan.points[1]}} otherwise<br>
+            Plan is currently {{plan.claimed ? '' : 'un'}}claimed<br>
+            <button *ngIf="!plan.claimed" (click)="client.claimPlan(plan.planNumber)">Claim plan!</button>
+        </div>
+    </div>
+    <br>
+    <div class="deal-container">
+        Current options:
+        <ul>
+            <li *ngFor="let option of getOptions()">
+                {{option}}
+            </li>
+        </ul>
+        Next turn suits will be: {{getNextTurnSuits().join(', ')}}
+    </div>
+    <br>
+    <div class="players">
+        {{client.readyPlayers.length}} / {{client.players.length}} players ready
+    </div>
+    <button (click)="client.doneTurn = !client.doneTurn">
+        I'm {{client.doneTurn ? 'not' : '' }} ready
+    </button>
+    <br>
+    <br>
+    <button (click)="client.doNextDeal()">
+        Deal new cards
+    </button>
+    <br>
+    <br>
+    <button (click)="client.startGame()">
+        Start a new game
+    </button>
+</div>

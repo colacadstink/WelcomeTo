@@ -38,8 +38,9 @@ export class WelcomeToPlayer {
   }
 
   private setupWebSocket() {
+    // TODO On disconnect, remove them from the room; if 0 people are in a room, kill the room
+
     this.ws.on('message', (data) => {
-      console.log(data);
       try {
         const message = JSON.parse(data.toString()) as WelcomeToMessage;
         if (!message.method) {
@@ -48,6 +49,11 @@ export class WelcomeToPlayer {
         }
 
         if (message.method === 'createRoom') {
+          const room = WelcomeToServer.rooms[message.id];
+          if (room) {
+            this.sendError(`Room already exists with that ID - try joining it?`);
+            return;
+          }
           this.room = WelcomeToServer.createRoom(message.id);
           this.room.players.push(this);
           this.room.update();
