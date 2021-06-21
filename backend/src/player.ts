@@ -39,6 +39,7 @@ export class WelcomeToPlayer {
 
   private setupWebSocket() {
     this.ws.on('message', (data) => {
+      console.log(data);
       try {
         const message = JSON.parse(data.toString()) as WelcomeToMessage;
         if (!message.method) {

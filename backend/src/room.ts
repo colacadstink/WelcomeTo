@@ -9,11 +9,11 @@ export class WelcomeToRoom {
   public players: WelcomeToPlayer[] = [];
   public valueCards: WelcomeToCard[] = [];
   public suitCards: WelcomeToCard[] = [];
-  public plans: WelcomeToCityPlan[];
+  public plans: WelcomeToCityPlan[] = [];
   public shuffleRequested = false;
 
-  private pristineDeck: WelcomeToCard[];
-  private deck: WelcomeToCard[];
+  private pristineDeck: WelcomeToCard[] = [];
+  private deck: WelcomeToCard[] = [];
 
   constructor(
     public id: string,
