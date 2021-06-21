@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {WelcomeToBackendClient} from "./clients/welcome-to-backend-client.service";
+import {SuitNamePipe} from './pipes/suit-name.pipe';
 
 @Component({
   selector: 'welcome-to-root',
@@ -19,15 +20,15 @@ export class AppComponent {
     const cardCount = this.client.suitCards.length;
     for(let i=0; i<cardCount; i++) {
       if(this.client.suitCards[i].suit === 'temp') {
-        options.push(`${this.client.valueCards[i].value} of ${this.client.suitCards[i].suit} (effectively ${this.client.valueCards[i].value - 2}-${this.client.valueCards[i].value + 2})`);
+        options.push(`${this.client.valueCards[i].value} of ${SuitNamePipe.SUIT_NAMES[this.client.suitCards[i].suit]} (effectively ${this.client.valueCards[i].value - 2}-${this.client.valueCards[i].value + 2})`);
       } else {
-        options.push(`${this.client.valueCards[i].value} of ${this.client.suitCards[i].suit}`);
+        options.push(`${this.client.valueCards[i].value} of ${SuitNamePipe.SUIT_NAMES[this.client.suitCards[i].suit]}`);
       }
     }
     return options;
   }
 
   public getNextTurnSuits() {
-    return this.client.valueCards.map((c) => c.suit);
+    return this.client.valueCards.map((c) => SuitNamePipe.SUIT_NAMES[c.suit]);
   }
 }
