@@ -18,7 +18,11 @@ export class AppComponent {
     const options: string[] = [];
     const cardCount = this.client.suitCards.length;
     for(let i=0; i<cardCount; i++) {
-      options.push(`${this.client.valueCards[i].value} of ${this.client.suitCards[i].suit}`);
+      if(this.client.suitCards[i].suit === 'temp') {
+        options.push(`${this.client.valueCards[i].value} of ${this.client.suitCards[i].suit} (effectively ${this.client.valueCards[i].value - 2}-${this.client.valueCards[i].value + 2})`);
+      } else {
+        options.push(`${this.client.valueCards[i].value} of ${this.client.suitCards[i].suit}`);
+      }
     }
     return options;
   }
