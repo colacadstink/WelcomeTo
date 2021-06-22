@@ -1,3 +1,10 @@
+<div class="name">
+    <label>
+        Name:
+        <input [(ngModel)]="client.name">
+    </label>
+</div>
+<br>
 <div *ngIf="!client.id" class="createOrJoin">
     <label>
         Room ID
@@ -35,8 +42,8 @@
     <div class="players">
         {{client.readyPlayers.length}} / {{client.players.length}} players ready
     </div>
-    <button (click)="client.doneTurn = !client.doneTurn">
-        I'm {{client.doneTurn ? 'not' : '' }} ready
+    <button (click)="client.ready = !client.ready">
+        I'm {{client.ready ? 'not' : '' }} ready
     </button>
     <br>
     <br>

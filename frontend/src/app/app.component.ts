@@ -12,7 +12,7 @@ export class AppComponent {
   public roomID: string = '';
 
   constructor() {
-    this.client = WelcomeToBackendClient.join('Ben');
+    this.client = WelcomeToBackendClient.connect();
   }
 
   public getOptions() {

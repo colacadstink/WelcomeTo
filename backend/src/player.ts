@@ -7,7 +7,7 @@ import {WelcomeToServer} from "./server";
 export class WelcomeToPlayer {
   public uuid: string;
   public userConnected = true;
-  public doneTurn = false;
+  public ready = false;
   public room: WelcomeToRoom = null;
 
   constructor(
@@ -25,6 +25,9 @@ export class WelcomeToPlayer {
     this.ws = ws;
     this.userConnected = true;
     this.setupWebSocket();
+    if(this.room) {
+      this.room.update(this);
+    }
   }
 
   public send(message: WelcomeToMessage) {
@@ -38,8 +41,6 @@ export class WelcomeToPlayer {
   }
 
   private setupWebSocket() {
-    // TODO On disconnect, remove them from the room; if 0 people are in a room, kill the room
-
     this.ws.on('message', (data) => {
       try {
         const message = JSON.parse(data.toString()) as WelcomeToMessage;
@@ -77,8 +78,8 @@ export class WelcomeToPlayer {
           }
           this.room.startGame(message.seed);
 
-        } else if (message.method === 'doneTurnUpdate') {
-          this.doneTurn = message.doneTurn;
+        } else if (message.method === 'readyUpdate') {
+          this.ready = message.ready;
           this.room?.update();
 
         } else if (message.method === 'rename') {

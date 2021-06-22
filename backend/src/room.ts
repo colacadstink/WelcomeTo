@@ -19,14 +19,18 @@ export class WelcomeToRoom {
     public id: string,
   ) {}
 
-  public update() {
+  public update(...targets: WelcomeToPlayer[]) {
+    if(targets.length === 0) {
+      targets = this.players;
+    }
+
     const players = this.players.map((p) => {
       return {
         name: p.name,
-        ready: p.doneTurn,
+        ready: p.ready,
       }
     });
-    const state: RoomState = {
+    const state: Omit<RoomState, 'me'> = {
       method: 'roomState',
       id: this.id,
       players: players,
@@ -35,8 +39,15 @@ export class WelcomeToRoom {
       plans: this.plans,
       shuffleImminent: this.shuffleRequested || this.deck.length < 3,
     };
-    for(const player of this.players) {
-      player.send(state);
+    for(const player of targets) {
+      player.send({
+        ...state,
+        me: {
+          name: player.name,
+          uuid: player.uuid,
+          ready: player.ready,
+        },
+      });
     }
   }
 
@@ -61,10 +72,10 @@ export class WelcomeToRoom {
     this.valueCards = this.deck.splice(0, 3);
 
     for(const player of this.players) {
-      player.doneTurn = false;
+      player.ready = false;
       player.send({
-        method: 'doneTurnUpdate',
-        doneTurn: false
+        method: 'readyUpdate',
+        ready: false
       });
     }
 

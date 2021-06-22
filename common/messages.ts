@@ -6,7 +6,7 @@ export type WelcomeToMessage =
   StartGame |
   RoomState |
   Rename |
-  DoneTurnUpdate |
+  ReadyUpdate |
   DoNextDeal |
   ClaimPlan |
   ErrorMessage;
@@ -34,6 +34,11 @@ export type StartGame = {
 export type RoomState = {
   method: 'roomState',
   id: string,
+  me: {
+    name: string,
+    ready: boolean,
+    uuid: string,
+  }
   players: {
     name: string,
     ready: boolean,
@@ -49,9 +54,9 @@ export type Rename = {
   newName: string
 }
 
-export type DoneTurnUpdate = {
-  method: 'doneTurnUpdate',
-  doneTurn: boolean
+export type ReadyUpdate = {
+  method: 'readyUpdate',
+  ready: boolean
 }
 
 export type DoNextDeal = {
