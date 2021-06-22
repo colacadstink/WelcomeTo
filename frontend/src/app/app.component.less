@@ -5,3 +5,72 @@
 .plan {
   margin-right: 10px;
 }
+
+.suit-icon {
+  &.real-estate {
+    color: mediumpurple;
+  }
+  &.landscape {
+    color: forestgreen;
+  }
+  &.pool {
+    color: cornflowerblue;
+  }
+  &.temp {
+    color: #f3e362;
+  }
+  &.bis {
+    color: salmon;
+  }
+}
+
+.card-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.card {
+  position: relative;
+  background-size: cover;
+
+  aspect-ratio: 480 / 675;
+  width: 240px;
+
+  margin-right: 5px;
+
+  font-family: "Arial Black", Arial, sans-serif;
+}
+
+.card-front {
+  background-image: url("/assets/blankFrontFace.png");
+
+  .top-hint {
+    font-size: 24px;
+    position: absolute;
+    right: 12px;
+    top: 5px;
+
+    .suit-icon {
+      font-size: 32px;
+    }
+  }
+
+  .number {
+    font-size: 80px;
+    position: absolute;
+    top: 129px;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.card-back {
+  background-image: url("/assets/blankBackFace.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .suit-icon {
+    font-size: 180px;
+  }
+}

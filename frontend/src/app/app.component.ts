@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {WelcomeToBackendClient} from "./clients/welcome-to-backend-client.service";
 import {SuitNamePipe} from './pipes/suit-name.pipe';
+import {SuitToFontAwesome, WelcomeToSuit} from '../../../common/cards';
 
 @Component({
   selector: 'welcome-to-root',
@@ -30,5 +31,14 @@ export class AppComponent {
 
   public getNextTurnSuits() {
     return this.client.valueCards.map((c) => SuitNamePipe.SUIT_NAMES[c.suit]);
+  }
+
+  public getClassesForSuit(suit: WelcomeToSuit) {
+    return [
+      'suit-icon',
+      suit,
+      'fas',
+      SuitToFontAwesome[suit],
+    ];
   }
 }

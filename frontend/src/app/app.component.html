@@ -30,13 +30,21 @@
     </div>
     <br>
     <div class="deal-container">
-        Current options:
-        <ul>
-            <li *ngFor="let option of getOptions()">
-                {{option}}
-            </li>
-        </ul>
-        Next turn suits will be: {{getNextTurnSuits().join(', ')}}
+        <div class="card-row">
+            <div class="card card-front" *ngFor="let card of client.valueCards">
+                <div class="top-hint">
+                    NEXT: <i [ngClass]="getClassesForSuit(card.suit)"></i>
+                </div>
+                <div class="number">
+                    {{card.value}}
+                </div>
+            </div>
+        </div>
+        <div class="card-row">
+            <div class="card card-back" *ngFor="let card of client.suitCards">
+                <i [ngClass]="getClassesForSuit(card.suit)"></i>
+            </div>
+        </div>
     </div>
     <br>
     <div class="players">
