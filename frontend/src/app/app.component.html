@@ -5,62 +5,80 @@
     </label>
 </div>
 <br>
-<div *ngIf="!client.id" class="createOrJoin">
-    <label>
-        Room ID
-        <input [(ngModel)]="roomID">
-    </label>
-    <button (click)="client.createRoom(roomID)">
-        Create new room
-    </button>
-    <button (click)="client.joinRoom(roomID)">
-        Join existing room
-    </button>
-</div>
-<div *ngIf="client.id" class="game">
-    Development plans:
-    <div class="plans">
-        <div *ngFor="let plan of client.plans" class="plan">
-            n.{{plan.planNumber}}<br>
-            Estates required: {{plan.estates.join(', ')}}<br>
-            Point values: {{plan.points[0]}} if first, {{plan.points[1]}} otherwise<br>
-            Plan is currently {{plan.claimed ? '' : 'un'}}claimed<br>
-            <button *ngIf="!plan.claimed" (click)="client.claimPlan(plan.planNumber)">Claim plan!</button>
+<div class="game-and-player-list-holder">
+    <div class="game-holder">
+        <div *ngIf="!client.id" class="createOrJoin">
+            <label>
+                Room ID
+                <input [(ngModel)]="roomID">
+            </label>
+            <button (click)="client.createRoom(roomID)">
+                Create new room
+            </button>
+            <button (click)="client.joinRoom(roomID)">
+                Join existing room
+            </button>
         </div>
-    </div>
-    <br>
-    <div class="deal-container">
-        <div class="card-row">
-            <div class="card card-front" *ngFor="let card of client.valueCards">
-                <div class="top-hint">
-                    NEXT: <i [ngClass]="getClassesForSuit(card.suit)"></i>
-                </div>
-                <div class="number">
-                    {{card.value}}
+        <div *ngIf="client.id" class="game">
+            Development plans:
+            <div class="plans">
+                <div *ngFor="let plan of client.plans" class="plan">
+                    n.{{plan.planNumber}}<br>
+                    Estates required: {{plan.estates.join(', ')}}<br>
+                    Point values: {{plan.points[0]}} if first, {{plan.points[1]}} otherwise<br>
+                    Plan is currently {{plan.claimed ? '' : 'un'}}claimed<br>
+                    <button *ngIf="!plan.claimed" (click)="client.claimPlan(plan.planNumber)">Claim plan!</button>
                 </div>
             </div>
-        </div>
-        <div class="card-row">
-            <div class="card card-back" *ngFor="let card of client.suitCards">
-                <i [ngClass]="getClassesForSuit(card.suit)"></i>
+            <br>
+            <div class="deal-container">
+                <div class="card-row">
+                    <div class="card card-front" *ngFor="let card of client.valueCards">
+                        <div class="top-hint" *ngIf="!client.shuffleImminent">
+                            NEXT: <div [ngClass]="getClassesForSuit(card.suit)"></div>
+                        </div>
+                        <div class="number">
+                            {{card.value}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-row">
+                    <div class="card card-back" *ngFor="let card of client.suitCards">
+                        <div [ngClass]="getClassesForSuit(card.suit)"></div>
+                    </div>
+                </div>
             </div>
+            <br>
+            <div class="players">
+                {{client.readyPlayers.length}} / {{client.players.length}} players ready
+            </div>
+            <button (click)="client.ready = !client.ready">
+                <ng-container *ngIf="!client.ready">
+                    I'm ready!
+                </ng-container>
+                <ng-container *ngIf="client.ready">
+                    Wait no I'm not
+                </ng-container>
+            </button>
+            <br>
+            <br>
+            <button (click)="client.doNextDeal()">
+                Deal new cards
+            </button>
+            <br>
+            <br>
+            <button (click)="client.startGame()">
+                Start a new game
+            </button>
         </div>
     </div>
-    <br>
-    <div class="players">
-        {{client.readyPlayers.length}} / {{client.players.length}} players ready
+    <div class="player-list-holder">
+        Players:
+        <ul>
+            <li *ngFor="let player of client.players">
+                <div class="icon" [class.check]="player.ready" [class.times]="!player.ready"></div>
+                {{player.name}}
+            </li>
+        </ul>
     </div>
-    <button (click)="client.ready = !client.ready">
-        I'm {{client.ready ? 'not' : '' }} ready
-    </button>
-    <br>
-    <br>
-    <button (click)="client.doNextDeal()">
-        Deal new cards
-    </button>
-    <br>
-    <br>
-    <button (click)="client.startGame()">
-        Start a new game
-    </button>
 </div>

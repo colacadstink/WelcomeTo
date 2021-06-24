@@ -1,27 +1,16 @@
+.game-and-player-list-holder {
+  display: flex;
+  &>* {
+    margin-right: 10px;
+  }
+}
+
 .plans {
   display: flex;
 }
 
 .plan {
   margin-right: 10px;
-}
-
-.suit-icon {
-  &.real-estate {
-    color: mediumpurple;
-  }
-  &.landscape {
-    color: forestgreen;
-  }
-  &.pool {
-    color: cornflowerblue;
-  }
-  &.temp {
-    color: #f3e362;
-  }
-  &.bis {
-    color: salmon;
-  }
 }
 
 .card-row {
@@ -50,8 +39,10 @@
     right: 12px;
     top: 5px;
 
-    .suit-icon {
+    .icon {
       font-size: 32px;
+      position: relative;
+      top: 0.2em;
     }
   }
 
@@ -70,7 +61,7 @@
   justify-content: center;
   align-items: center;
 
-  .suit-icon {
+  .icon {
     font-size: 180px;
   }
 }

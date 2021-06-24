@@ -5,12 +5,12 @@
   "main": "dist/backend/src/index.js",
   "scripts": {
     "postinstall": "cd backend && npm install && cd ../frontend && npm install",
-    "build": "npm run buildBackend && npm run buildFrontend && npm run combineBuilds",
+    "build": "npm run buildBackend && npm run buildFrontend && npm run copyBackendModules",
     "buildBackend": "cd backend && npm run build",
     "buildFrontend": "cd frontend && npm run build",
+    "copyBackendModules": "copy-node-modules backend dist",
     "watchBackend": "cd backend && npm run buildWatch",
-    "watchFrontend": "cd frontend && npm run buildWatch",
-    "combineBuilds": "node combineBuilds.js"
+    "watchFrontend": "cd frontend && npm run buildWatch"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/colacadstink/WelcomeTo#readme",
   "dependencies": {
-    "copy-node-modules": "^1.1.1",
-    "fs-extra": "^10.0.0"
+    "copy-node-modules": "^1.1.1"
   }
 }
